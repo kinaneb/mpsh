@@ -6,10 +6,10 @@ CFLAGS=-Wall -g -std=c11
 
 LDLIBS= -lm
 
-ALL = mpsh
+ALL = thafatFunc kinanFunc
 
 all : $(ALL)
 
-tp5 : mpsh.c
+tp5 : thafatFunc.c kinanFunc.c
 
 cleanall : rm -rf *~ $(ALL)
