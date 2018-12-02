@@ -1,3 +1,9 @@
+/* ****************************************************** */
+/* BOUDJERDA Thafath                                      */
+/* mpsh                                                   */
+/* echoShell, pwdShell, cdShell, catShell, lsShell        */
+/* ****************************************************** */
+
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,6 +25,7 @@ lsShell (char *pathDossier);
 int
 main (int argc, char *argv[])
 {
+  if(argc > 1)
 
   if (strcmp (argv[1], "cat") == 0)
     {
@@ -45,10 +52,7 @@ main (int argc, char *argv[])
     {
       exit (0);
     }
-  else if (strcmp (argv[1], "  ") == 0)
-    {
-      printf ("saisir la command que vous voulez\n");
-    }
+
   else
     {
       printf ("Option non disponible\n");
@@ -133,4 +137,3 @@ lsShell (char *pathDossier)
   printf ("\n");
   closedir (dossier);
 }
-
