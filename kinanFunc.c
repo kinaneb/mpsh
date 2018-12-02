@@ -12,21 +12,22 @@ int export_mpsh (char *s);
 int history_mpsh(int n);
 int mkdir(const char *pathname, mode_t mode);
 
-
+int b;
 extern int last_command_status;
 
 int main (void)
 {
-//char *ss = "test export"; 
+//char *ss = "test export";
   //export_mpsh("test export");
   history_mpsh(0);
   return 0;
+  
 }
 
 int exit_mpsh()
 {
   int last_command_status = 0;
-  return last_command_status; 
+  return last_command_status;
 }
 
 int exit_N_mpsh(int n, ...)
@@ -54,7 +55,7 @@ int history_mpsh(int n)
     while (fgets(s, 1022, fp) != NULL) // file text not ended
     {
       memset(&s[strlen(s)-1],'\0',  1); // set end of string s
-      printf(" %s\n", s);  
+      printf(" %s\n", s);
     }
   }
   if(n > 0)
@@ -114,7 +115,7 @@ int mkdir_mpsh(char *pathname, mode_t mode)
   return n;
 }
 
-  
+
 /*
  supporter les références de fichiers relatives et absolues ;
 commandes sur mpsh sont toutes lancées en avant-plan ;
