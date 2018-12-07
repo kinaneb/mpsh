@@ -1,0 +1,19 @@
+
+
+CC=gcc
+
+CFLAGS=-Wall -g -std=c11
+
+LDLIBS= -lm
+
+ALL = testingmain
+
+all : $(ALL)
+
+testingmain : testingmain.o mpsh_table.o
+
+testingmain.o : testingmain.c mpsh_table.h
+
+mpsh_table.o : mpsh_table.c mpsh_table.h
+
+cleanall : rm -rf *~ $(ALL)

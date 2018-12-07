@@ -21,7 +21,7 @@ int main (void)
   //export_mpsh("test export");
   history_mpsh(0);
   return 0;
-  
+
 }
 
 int exit_mpsh()
@@ -44,7 +44,7 @@ int history_mpsh(int n)
 {
   FILE *fp;
   char s[1024];
-  fp = fopen (".mpshHistory", "r");
+  fp = fopen (".mpshHistory", "r+");
   if (fp == NULL) // fail of opening file
   {
     perror("error opening history file.\n");
@@ -94,8 +94,8 @@ int export_mpsh(char *s)
        if(n > 0)
        {
          fseeko(fp,-n,SEEK_END);
-         off_t position = ftello(fp);
-         ftruncate(fileno(fp), position);
+         off_t i = ftello(fp);
+         ftruncate(fileno(fp), i);
        }
        printf(" error export_mpsh! \n" );
     }
