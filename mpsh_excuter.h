@@ -10,6 +10,8 @@
 #include <unistd.h> // fork lib
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 extern int mpsh_excuter(char **line_tokens);
 
