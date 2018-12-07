@@ -10,9 +10,9 @@
 void mpsh_main_loop(void) {
   char *line;
   char **line_tokens;
-  short status = 0;
+  short status = 1;
   mpsh_init();
-    while (1){
+    while (status){
     printf("%s",PS1);
     line = mpsh_read_line();
     line_tokens = mpsh_toknizer(line);

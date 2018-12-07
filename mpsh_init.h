@@ -9,6 +9,7 @@
 
 #include "mpsh_text_analyzer.h"
 #include <unistd.h>
+#include <errno.h>
 
 extern char PS1[];
 extern void mpsh_init(void);
