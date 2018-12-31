@@ -1,11 +1,19 @@
 #ifndef MPSH_H
 #define MPSH_H
+#include<stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
 
+extern int errno;
 
-void echoShell(char *texteUtilisateur);
-void pwdShell(char *dossierType);
-void cdShell(char *pathUtilisateur);
-void catShell(char *pathFichier);
-void lsShell(char *pathDossier);
+int echoShell(char *texteUtilisateur);
+int  pwdShell(char *dossierType);
+int  cdShell(char *pathUtilisateur);
+int catShell(char *pathFichier);
+int lsShell(char *pathDossier);
 
 #endif

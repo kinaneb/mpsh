@@ -1,52 +1,50 @@
-#include<stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <dirent.h>
+
 #include "mpsh_func.h"
 
 
-void echoShell(char *texteUtilisateur){
+int echoShell(char *texteUtilisateur){
 
         printf("%s\n", texteUtilisateur); 
+	return 0;
 }
 
 
-void pwdShell(char *dossierType){
+int pwdShell(char *dossierType){
     char *pwdActuel = malloc(500*sizeof(char));
     if(pwdActuel){
     	if (!getcwd(pwdActuel, 500)) { 
 	//copie le chemin d'acces absolu du répertoire du travail courant dans la chaine pointée par pwdActuel qui est de longueur 500
-        	perror("getcwd"); // affiche un message sur la sortie d'erreur standard  
-        	exit(-1);
+        	fprintf(stderr, "%s\n", strerror( errno ) ); // affiche un message sur la sortie d'erreur standard  
+        	return errno;
    	 }
     printf ("Dossier %s = %s\n", dossierType, pwdActuel);
 	} 
     free(pwdActuel);
+return 0;
 }
 
 
-void cdShell(char *pathUtilisateur){
+int cdShell(char *pathUtilisateur){
     pwdShell("ancien");
 
     int ret;
     ret = chdir(pathUtilisateur); //remplace le repertoire de travail courant du processus appelant par celui indiqué dans le chemin pathUtilisateur 
     if (ret) {
-        perror ("chdir");
-        exit (EXIT_FAILURE);
+        fprintf(stderr, "%s\n", strerror( errno ) );
+	return errno; 
     }
 
     pwdShell("actuel");
+return 0;
 }
 
-void catShell(char *pathFichier){
+int catShell(char *pathFichier){
     char tmpBuf[512];
     FILE *monFichier = NULL;
     monFichier = fopen(pathFichier, "r+");
     if(monFichier == NULL){
-        perror("fopen");
-        exit(-1);        
+      fprintf(stderr, "%s\n", strerror( errno ) );
+      return errno;         
     }          
 
     while (fgets(tmpBuf, 512, monFichier)>0){ 
@@ -55,20 +53,24 @@ void catShell(char *pathFichier){
     printf("\n");
     
     fclose(monFichier);
+return 0;
 }
 
 
-void lsShell(char *pathDossier){
+int lsShell(char *pathDossier){
     struct dirent *entree;
     
     DIR *dossier;
     dossier = opendir(pathDossier);
-    
+    if ((entree = readdir(dossier)) == NULL) {
+	    fprintf(stderr, "%s\n", strerror( errno ) );
+      	    return errno;}  
     while ((entree = readdir(dossier)) != NULL) {
             printf("%s ", entree->d_name);
     }
     
     printf("\n");
     closedir(dossier);
+return 0;
 }
 
