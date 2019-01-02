@@ -15,5 +15,7 @@ extern int errno;
 
 extern char *mpsh_read_line(void);
 extern char **mpsh_toknizer(char *line);
+extern char *after_equal_signe_from_line(char *line, char *target);
+extern int int_target_from_line(char *line, char *target);
 
 #endif
