@@ -7,18 +7,27 @@
 #include "mpsh_main_loop.h"
 
 
-void mpsh_main_loop(void) {
+int exit_boolean = 1;
+
+int mpsh_main_loop(void) {
   char *line;
-  char **line_tokens;
-  short status = 1;
   mpsh_init();
-    while (status){
+  while (exit_boolean)
+  {
     printf("%s",PS1);
     line = mpsh_read_line();
-    line_tokens = mpsh_toknizer(line);
-    status = mpsh_excuter(line_tokens);
+    int l = builtin_handler(line);
+    if(l != 0)
+    {
+      char **line_tokens = mpsh_toknizer(line);
+      mpsh_excuter(line_tokens);
+      free(line_tokens);
+    }
 
+    history = limited_append_row(history, line, HISTSIZE);
+    history_init_len++;
     free(line);
-    free(line_tokens);
   }
+  limited_append_table(history_dir, history, HISTFILESIZE);
+  return last_command_status;
 }

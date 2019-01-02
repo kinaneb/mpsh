@@ -9,8 +9,6 @@
 
 int main(int argc, char **argv)
 {
-
-  printf("mpsh_main_loop\n");
   mpsh_main_loop();
   //return EXIT_SUCCESS;
 }

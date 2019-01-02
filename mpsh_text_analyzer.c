@@ -9,7 +9,7 @@
 
 #define MPSH_TOKEN 256
 #define MPSH_WHITE " \t\r\n\a"
-#define MPSH_BUFFER_SIZE 1024
+#define MPSH_BUFFER_SIZE 512
 
 
 char *mpsh_read_line(void)
@@ -62,7 +62,6 @@ char **mpsh_toknizer(char *line)
   while (token != NULL) {
     line_tokens[i] = token;
     i++;
-
     if (i >= buffer_size) {
       buffer_size += MPSH_TOKEN;
       line_tokens = realloc(line_tokens, buffer_size * sizeof(char*));
@@ -76,4 +75,45 @@ char **mpsh_toknizer(char *line)
   }
   line_tokens[i] = NULL;
   return line_tokens;
+}
+
+char *remove_first_equal(char *word)
+{
+  if(word[0] == '=')
+  {
+    char *temp = malloc(sizeof(char)*(strlen(word)));
+    memset(&temp[strlen(temp)-1], '\0', 1);
+    strcpy(temp, &word[1]);
+    if(temp == NULL)
+    {
+      fprintf(stderr, "%s\n", strerror( errno ) );
+      exit(EXIT_FAILURE);
+    }
+    return temp;
+  }
+  return word;
+}
+
+char *after_equal_signe_from_line(char *line, char *target)
+{
+  char **line_tokens = mpsh_toknizer(line);
+  int i = 0;
+  printf("start t \n" );
+  while(line_tokens[i])
+  {
+    if((strstr(line_tokens[i], target)) != NULL)
+    {
+      printf("token :%s\n", line_tokens[i]);
+    }
+    i++;
+  }
+  return NULL;
+}
+
+int int_target_from_line(char *line, char *target)
+{
+  char *temp;
+  temp = after_equal_signe_from_line(line, target);
+  char *temp_1 = remove_first_equal(temp);
+  return atoi(temp_1);
 }

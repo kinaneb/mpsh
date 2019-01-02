@@ -17,9 +17,9 @@ int mpsh_excuter(char **line_tokens)
     // Child  https://linux.die.net/man/3/execvp
     if (execvp (line_tokens[0], line_tokens) == -1)
     {
-      perror("mpsh execvp failure!");
+      fprintf(stderr, "%s\n", strerror( errno ) );
     }
-    exit(EXIT_FAILURE);
+    return errno;
   }
   else if (pid < 0)
   {
@@ -29,7 +29,8 @@ int mpsh_excuter(char **line_tokens)
   else
   {
     // Parent
-    do {
+    do
+    {
       wpid = waitpid(pid, &status, WUNTRACED);
     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
   }
